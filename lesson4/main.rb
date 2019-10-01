@@ -2,6 +2,18 @@ require './route.rb'
 require './station.rb'
 require './train.rb'
 
+def create_station
+  puts 'Enter name for new station'
+  name = gets.chomp.to_s
+  Station.new(name)
+end
+
+def create_train
+  puts 'Enter name for new train'
+  name = gets.chomp.to_s
+  Train.new(name)
+end
+
 loop do
   puts 'Enter number for your choice'
   puts '1 - Create stations'
@@ -12,22 +24,39 @@ loop do
   puts '6 - Unhook the cars from the train'
   puts '7 - Move the train along the route back and forth'
   puts '8 - View the list of stations and the list of trains at the station'
+  puts 'Anything - for exit'
   choice = gets.chomp.to_i
   case choice
   when 1
-    puts 'Enter name for new station'
-    name = gets.chomp.to_s
-    Station.new(name)
+    create_station
   when 2
-    puts 'Enter name for new train'
-    name = gets.chomp.to_s
-    Train.new(name)
+    create_train
   when 3
     puts 'Enter name for new route'
     name = gets.chomp.to_s
-    Route.new(name)
+
+    puts 'Enter start for new route'
+    start = gets.chomp.to_s
+
+    puts 'Enter finish for new route'
+    finish = gets.chomp.to_s
+
+    name = Route.new(start, finish)
+
+    puts 'Enter number for your choice'
+    puts '1 - Add station to route'
+    puts '2 - Delete station from route'
+    choice2 = gets.chomp.to_i
+    case choice2
+    when 1
+      name.add_station(create_station)
+    when 2
+      Route.show_list_of_stations
+    else
+      puts 'Sorry, your choice is wrong'
+    end
   when 4
-    p '4'
+    puts 'Enter name for new route'
   when 5
     p '5'
   when 6

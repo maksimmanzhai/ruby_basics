@@ -62,14 +62,14 @@ class Train
   end
 end
 
-class PassengerTrain < Train
-  def initialize
-    @type = 'passenger'
-  end
-end
+# class PassengerTrain < Train
+#   def initialize
+#     @type = 'passenger'
+#   end
+# end
 
-class CargoTrain < Train
-  def initialize
-    @type = 'cargo'
-  end
-end
+# class CargoTrain < Train
+#   def initialize
+#     @type = 'cargo'
+#   end
+# end
