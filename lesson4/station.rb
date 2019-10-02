@@ -7,7 +7,6 @@ class Station
   def initialize(name)
     @name = name
     @trains = {}
-    puts "Station #{@name} is created"
   end
 
   def add_train(train)

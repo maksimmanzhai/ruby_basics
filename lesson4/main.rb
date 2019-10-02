@@ -2,24 +2,12 @@ require './route.rb'
 require './station.rb'
 require './train.rb'
 
-def create_station
-  puts 'Enter name for new station'
-  name = gets.chomp.to_s
-  Station.new(name)
-end
-
-def create_train
-  puts 'Enter name for new train'
-  name = gets.chomp.to_s
-  Train.new(name)
-end
-
 loop do
   puts 'Enter number for your choice'
-  puts '1 - Create stations'
-  puts '2 - Create trains'
+  puts '1 - Create station'
+  puts '2 - Create train'
   puts '3 - Create routes and manage stations in it (add, delete)'
-  puts '4 - Assign a Train Route'
+  puts '4 - Assign a train route'
   puts '5 - Add cars to the train'
   puts '6 - Unhook the cars from the train'
   puts '7 - Move the train along the route back and forth'
@@ -28,30 +16,36 @@ loop do
   choice = gets.chomp.to_i
   case choice
   when 1
-    create_station
+    puts 'Enter name for new station'
+    name_station = gets.chomp.to_s
+    Station.new(name_station)
   when 2
-    create_train
+    puts 'Enter name for new train'
+    name_train = gets.chomp.to_s
+    puts 'Enter type for new train'
+    type_train = gets.chomp.to_s
+    puts 'Enter carriage count for new train'
+    carriage_count_train = gets.chomp.to_s
+    Train.new(name_train, type_train, carriage_count_train)
   when 3
     puts 'Enter name for new route'
-    name = gets.chomp.to_s
-
+    name_route = gets.chomp.to_s
     puts 'Enter start for new route'
     start = gets.chomp.to_s
-
+    Station.new(start)
     puts 'Enter finish for new route'
     finish = gets.chomp.to_s
-
-    name = Route.new(start, finish)
-
+    Station.new(finish)
+    p Route.new(name_route, start, finish)
     puts 'Enter number for your choice'
     puts '1 - Add station to route'
     puts '2 - Delete station from route'
     choice2 = gets.chomp.to_i
     case choice2
     when 1
-      name.add_station(create_station)
+      p '3-1'
     when 2
-      Route.show_list_of_stations
+      p '3-2'
     else
       puts 'Sorry, your choice is wrong'
     end
@@ -66,7 +60,7 @@ loop do
   when 8
     p '8'
   else
-    puts 'Good bye. Try again'
+    puts 'Good bye.'
     break
   end
 end
