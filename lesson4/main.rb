@@ -2,6 +2,10 @@ require './route.rb'
 require './station.rb'
 require './train.rb'
 
+stations = []
+trains = []
+routes = []
+
 loop do
   puts 'Enter number for your choice'
   puts '1 - Create station'
@@ -18,15 +22,15 @@ loop do
   when 1
     puts 'Enter name for new station'
     name_station = gets.chomp.to_s
-    Station.new(name_station)
+    stations << Station.new(name_station)
   when 2
-    puts 'Enter name for new train'
-    name_train = gets.chomp.to_s
+    puts 'Enter number for new train'
+    number_train = gets.chomp.to_i
     puts 'Enter type for new train'
     type_train = gets.chomp.to_s
     puts 'Enter carriage count for new train'
     carriage_count_train = gets.chomp.to_s
-    Train.new(name_train, type_train, carriage_count_train)
+    trains << Train.new(number_train, type_train, carriage_count_train)
   when 3
     puts 'Enter name for new route'
     name_route = gets.chomp.to_s
