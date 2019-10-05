@@ -2,29 +2,18 @@
 
 # class train
 class Train
-  attr_reader :number, :type, :carriage_count, :speed
+  attr_reader :number, :type, :speed, :carriages
 
-  def initialize(number, type, carriage_count)
+  def initialize(number)
     @number = number
-    @type = type
-    @carriage_count = carriage_count
     @speed = 0
+    @carriages = []
   end
 
-  def up_speed(arg)
-    @speed += arg
-  end
-
-  def stop
-    @speed = 0
-  end
-
-  def coupling_carriages
-    @carriage_count += 1 if @speed.zero?
-  end
-
-  def uncoupling_carriages
-    @carriage_count -= 1 if @speed.zero? && @carriage_count > 0
+  def coupling_carriages(carriage)
+    if carriage.type == self.type
+      @carriages << carriage
+    end
   end
 
   def set_route(route)
@@ -60,16 +49,14 @@ class Train
     return unless @current_station_index < @route.list_of_stations.size
     @route.list_of_stations[@current_station_index + 1]
   end
+
+  # each train has its own speed
+  def up_speed(arg)
+    @speed += arg
+  end
+
+  # each train has its own stop-command
+  def stop
+    @speed = 0
+  end
 end
-
-# class PassengerTrain < Train
-#   def initialize
-#     @type = 'passenger'
-#   end
-# end
-
-# class CargoTrain < Train
-#   def initialize
-#     @type = 'cargo'
-#   end
-# end
