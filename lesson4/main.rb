@@ -14,16 +14,73 @@ class Main
     @trains = []
     @routes = []
   end
+
+  def create_station
+    
+  end
+
+  def create_train
+    
+  end
+
+  def create_route
+    
+  end
+
+  def method_name
+    
+  end
+
+  def method_name
+    
+  end
+
+  def method_name
+    
+  end
+
+  def method_name
+    
+  end
+
+  def method_name
+    
+  end
 end
 
 menu = Main.new
 
-p train1 = CargoTrain.new(1)
-p train2 = PassengerTrain.new(2)
-train1.up_speed(90)
-p train1
-p cargoCar = CargoCarriage.new(100)
-p passCar = PassengerCarriage.new(20)
-p train1.coupling_carriages(cargoCar)
-p train1.coupling_carriages(cargoCar)
-p train1
+loop do
+  puts 'Enter number for your choice'
+  puts '1 - Create Station'
+  puts '2 - Create Train'
+  puts '3 - Create Route and manage Stations in it (add, delete)'
+  puts '4 - Assign a Train Route'
+  puts '5 - Add Cars to the Train'
+  puts '6 - Unhook the Cars from the Train'
+  puts '7 - Move the Train along the Route back and forth'
+  puts '8 - View the list of Stations and the list of Trains at the Station'
+  puts 'Anything - for exit'
+  choice = gets.chomp.to_i
+  case choice
+  when 1
+    # Create stations
+  when 2
+    # Create trains
+  when 3
+    # Create routes and manage stations in it (add, delete)
+  when 4
+    # Assign a train route
+  when 5
+    # Add wagons to the train
+  when 6
+    # Unhook the cars from the train
+  when 7
+    # Move the train along the route forward and backward
+  when 8
+    # View the list of stations and the list of trains at the station
+  else
+    puts 'Good bye. Try again'
+    break
+  end
+end
