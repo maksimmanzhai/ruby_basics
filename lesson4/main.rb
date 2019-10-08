@@ -23,11 +23,6 @@ class Main
     @stations << @station
   end
 
-  def create_station(name)
-    @station = Station.new(name)
-    @stations << @station
-  end
-
   def create_train
     puts 'Enter number for train'
     number = gets.chomp.to_i
@@ -39,13 +34,13 @@ class Main
     puts 'Enter name for route'
     name = gets.chomp.to_s
     puts 'Enter name for start'
-    start = gets.chomp.to_s
-    create_station(start)
+    start_name = gets.chomp.to_s
+    start = Station.new(start_name)
     puts 'Enter name for finish'
-    finish = gets.chomp.to_s
-    create_station(finish)
-    @route = Route.new(name, start, finish)
-    @routes << @route
+    finish_name = gets.chomp.to_s
+    finish = Station.new(finish_name)
+    route = Route.new(name, start, finish)
+    @routes << route
   end
 
   def assign_route(train, route)
@@ -65,7 +60,7 @@ class Main
   end
 
   def view_list
-    
+
   end
 end
 
