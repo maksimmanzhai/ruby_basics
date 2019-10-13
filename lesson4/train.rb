@@ -16,6 +16,10 @@ class Train
     end
   end
 
+  def uncoupling_carriages
+    @carriages.pop
+  end
+
   def set_route(route)
     @route = route
     @current_station_index = 0

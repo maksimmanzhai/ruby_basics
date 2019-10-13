@@ -60,8 +60,8 @@ class Main
     train.coupling_carriages(carriage)
   end
 
-  def unhook_cars
-    
+  def unhook_cars(train)
+    train.uncoupling_carriages
   end
 
   def move_train
@@ -208,8 +208,21 @@ loop do
     end
     main.add_cars(main.trains[number_train - 1], carriage)
   when 6
-    # Unhook the cars from the train
-    main.unhook_cars
+    if main.trains.empty?
+      puts 'You will create Train'
+      main.create_train
+    end
+    puts 'Which Train do you want to choose?'
+    main.trains.each.with_index(1) do |train, index|
+      puts "#{index} - #{train.number}"
+    end
+    puts 'Enter number for Train'
+    number_train = gets.chomp.to_i
+    if main.trains[number_train - 1].carriages.empty?
+      puts 'Your Train is empty'
+      next
+    end
+    main.unhook_cars(main.trains[number_train - 1])
   when 7
     # Move the train along the route forward and backward
     main.move_train
