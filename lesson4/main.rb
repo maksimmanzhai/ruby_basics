@@ -53,7 +53,7 @@ class Main
   end
 
   def assign_route(train, route)
-    @trains[train - 1].set_route(@routes[route - 1])
+    @trains[train].set_route(@routes[route])
   end
 
   def add_cars(train, carriage)
@@ -64,8 +64,15 @@ class Main
     train.uncoupling_carriages
   end
 
-  def move_train
-    
+  def move_train(train)
+    puts 'Which way do you want to move the Train (forward or back)?'
+    way = gets.chomp.to_s
+    if way == 'forward'
+      train.move_forward
+    end
+    if way == 'back'
+      train.move_back
+    end
   end
 
   def view_list
@@ -182,7 +189,7 @@ loop do
     end
     puts 'Enter number for Route'
     number_route = gets.chomp.to_i
-    main.assign_route(number_train, number_route)
+    main.assign_route(number_train - 1, number_route - 1)
   when 5
     if main.trains.empty?
       puts 'You will create Train'
@@ -225,7 +232,28 @@ loop do
     main.unhook_cars(main.trains[number_train - 1])
   when 7
     # Move the train along the route forward and backward
-    main.move_train
+    if main.trains.empty?
+      puts 'You will create Train'
+      main.create_train
+    end
+    puts 'Which Train do you want to choose?'
+    main.trains.each.with_index(1) do |train, index|
+      puts "#{index} - #{train.number}"
+    end
+    puts 'Enter number for Train'
+    number_train = gets.chomp.to_i
+    if main.routes.empty?
+      puts 'First you need to create a Route'
+      main.create_route
+    end
+    puts 'Which Route do you want to choose?'
+    main.routes.each.with_index(1) do |route, index|
+      puts "#{index} - #{route.name}"
+    end
+    puts 'Enter number for Route'
+    number_route = gets.chomp.to_i
+    main.assign_route(number_train - 1, number_route - 1)
+    main.move_train(main.trains[number_train - 1])
   when 8
     # View the list of stations and the list of trains at the station
     main.view_list
