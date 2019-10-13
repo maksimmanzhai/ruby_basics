@@ -26,7 +26,14 @@ class Main
   def create_train
     puts 'Enter number for train'
     number = gets.chomp.to_i
-    @train = Train.new(number)
+    puts 'Enter type (cargo or passenger) for train'
+    type = gets.chomp.to_s
+    if type == 'cargo'
+      @train = CargoTrain.new(number)
+    end
+    if type == 'passenger'
+      @train = PassengerTrain.new(number)
+    end
     @trains << @train
   end
 
@@ -49,8 +56,8 @@ class Main
     @trains[train - 1].set_route(@routes[route - 1])
   end
 
-  def add_cars
-    
+  def add_cars(train, carriage)
+    train.coupling_carriages(carriage)
   end
 
   def unhook_cars
@@ -62,7 +69,18 @@ class Main
   end
 
   def view_list
-    
+    puts '===============stations==============='
+    stations.each.with_index(1) do |station, index|
+      puts "#{index} - #{station.name}"
+    end
+    puts '===============trains==============='
+    trains.each.with_index(1) do |train, index|
+      puts "#{index} - #{train.number} - #{train.type} - #{train.carriages}"
+    end
+    puts '===============routes==============='
+    routes.each.with_index(1) do |route, index|
+      puts "#{index} - #{route.name}"
+    end
   end
 end
 
@@ -144,7 +162,6 @@ loop do
       next
     end
   when 4
-    # Assign a train route
     if main.trains.empty?
       puts 'You will create Train'
       main.create_train
@@ -167,8 +184,29 @@ loop do
     number_route = gets.chomp.to_i
     main.assign_route(number_train, number_route)
   when 5
-    # Add wagons to the train
-    main.add_cars
+    if main.trains.empty?
+      puts 'You will create Train'
+      main.create_train
+    end
+    puts 'Which Train do you want to choose?'
+    main.trains.each.with_index(1) do |train, index|
+      puts "#{index} - #{train.number}"
+    end
+    puts 'Enter number for Train'
+    number_train = gets.chomp.to_i
+    puts 'Enter type for Carriage'
+    carriage_type = gets.chomp.to_s
+    if carriage_type == 'cargo'
+      puts 'Enter value for capacity'
+      capacity = gets.chomp.to_i
+      carriage = CargoCarriage.new(capacity)
+    end
+    if carriage_type == 'passenger'
+      puts 'Enter value for seats'
+      seats = gets.chomp.to_i
+      carriage = PassengerCarriage.new(seats)
+    end
+    main.add_cars(main.trains[number_train - 1], carriage)
   when 6
     # Unhook the cars from the train
     main.unhook_cars
