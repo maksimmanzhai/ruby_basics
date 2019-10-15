@@ -1,9 +1,9 @@
 require './carriage.rb'
 require './train.rb'
-require './cargoCarriage.rb'
-require './cargoTrain.rb'
-require './passengerCarriage.rb'
-require './passengerTrain.rb'
+require './cargo_carriage.rb'
+require './cargo_train.rb'
+require './passenger_carriage.rb'
+require './passenger_train.rb'
 require './route.rb'
 require './station.rb'
 
@@ -14,6 +14,10 @@ class Main
     @stations = []
     @trains = []
     @routes = []
+  end
+
+  def run
+    
   end
 
   def create_station
