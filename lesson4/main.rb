@@ -17,14 +17,54 @@ class Main
   end
 
   def run
-    
+    loop do
+      puts 'Enter number for your choice'
+      puts '1 - Create Station'
+      puts '2 - Create Train'
+      puts '3 - Create Route'
+      puts '4 - Add Station to Route'
+      puts '5 - Delete Station from Route'
+      puts '6 - Assign a Train Route'
+      puts '7 - Add Cars to the Train'
+      puts '8 - Unhook the Cars from the Train'
+      puts '9 - Move the Train along the Route back and forth'
+      puts '10 - View the list of Stations and the list of Trains at the Station'
+      puts 'Anything - for exit'
+      choice = gets.chomp.to_i
+      case choice
+      when 1
+        create_station
+      when 2
+        create_train
+      when 3
+        create_route
+      when 4
+        add_station_to_route
+      when 5
+        delete_station_from_route
+      when 6
+        assign_route
+      when 7
+        add_cars
+      when 8
+        unhook_cars
+      when 9
+        move_train
+      when 10
+        view_list
+      else
+        puts 'Good bye. Try again'
+        break
+      end
+    end
   end
 
   def create_station
-    puts 'Enter name for station'
+    puts 'Enter name for Station'
     name = gets.chomp.to_s
-    @station = Station.new(name)
-    @stations << @station
+    station = Station.new(name)
+    stations << station
+    return station
   end
 
   def create_train
@@ -33,172 +73,67 @@ class Main
     puts 'Enter type (cargo or passenger) for train'
     type = gets.chomp.to_s
     if type == 'cargo'
-      @train = CargoTrain.new(number)
+      train = CargoTrain.new(number)
     end
     if type == 'passenger'
-      @train = PassengerTrain.new(number)
+      train = PassengerTrain.new(number)
     end
-    @trains << @train
+    @trains << train
+    return train
   end
 
   def create_route
     puts 'Enter name for route'
     name = gets.chomp.to_s
-    puts 'Enter name for start'
-    start_name = gets.chomp.to_s
-    start = Station.new(start_name)
-    @stations << start
-    puts 'Enter name for finish'
-    finish_name = gets.chomp.to_s
-    finish = Station.new(finish_name)
-    @stations << finish
+    puts 'Choose Station for start of Route'
+    start = choose_station
+    puts 'Choose Station for finish of Route'
+    finish = choose_station
     route = Route.new(name, start, finish)
     @routes << route
   end
 
-  def assign_route(train, route)
-    @trains[train].set_route(@routes[route])
-  end
-
-  def add_cars(train, carriage)
-    train.coupling_carriages(carriage)
-  end
-
-  def unhook_cars(train)
-    train.uncoupling_carriages
-  end
-
-  def move_train(train)
-    puts 'Which way do you want to move the Train (forward or back)?'
-    way = gets.chomp.to_s
-    if way == 'forward'
-      train.move_forward
-    end
-    if way == 'back'
-      train.move_back
-    end
-  end
-
-  def view_list
-    puts '===============stations==============='
-    stations.each.with_index(1) do |station, index|
-      puts "#{index} - #{station.name}"
-    end
-    puts '===============trains==============='
-    stations.each.with_index(1) do |station, index|
-      puts "#{index} - #{station.trains}"
-    end
-  end
-
-  def choose_station
-    puts 'Enter number for add existing Station'
-    stations.each.with_index(1) do |station, index|
-      puts "#{index} - #{station.name}"
-    end
-    number_station = gets.chomp.to_i
-  end
-
-  def choose_train
-    puts 'Which Train do you want to choose?'
-    trains.each.with_index(1) do |train, index|
-      puts "#{index} - #{train.number}"
-    end
-    puts 'Enter number for Train'
-    number_train = gets.chomp.to_i
-  end
-
-  def choose_route
-    puts 'Which route do you want to choose?'
-    routes.each.with_index(1) do |route, index|
-      puts "#{index} - #{route.name}"
-    end
-    puts 'Enter number for Route'
-    number_route = gets.chomp.to_i
-  end
-end
-
-main = Main.new
-
-loop do
-  puts 'Enter number for your choice'
-  puts '1 - Create Station'
-  puts '2 - Create Train'
-  puts '3 - Create Route and manage Stations in it (add, delete)'
-  puts '4 - Assign a Train Route'
-  puts '5 - Add Cars to the Train'
-  puts '6 - Unhook the Cars from the Train'
-  puts '7 - Move the Train along the Route back and forth'
-  puts '8 - View the list of Stations and the list of Trains at the Station'
-  puts 'Anything - for exit'
-  choice = gets.chomp.to_i
-  case choice
-  when 1
-    main.create_station
-  when 2
-    main.create_train
-  when 3
-    puts 'Enter number for your choice'
-    puts '1 - Create Route'
-    puts '2 - Add Station to Route'
-    puts '3 - Delete Station from Route'
-    puts 'Anything - for back to previous menu'
-    choice = gets.chomp.to_i
-    case choice
-    when 1
-      main.create_route
-    when 2
-      if main.routes.empty?
-        puts 'First you need to create a Route'
-        main.create_route
-      end
-      number_route = main.choose_route
-      puts 'Enter number for add Station'
-      puts '1 - Add new Station'
-      puts '2 - Add existing Station'
-      puts 'Anything - for back to previous menu'
-      number_station = gets.chomp.to_i
-      case number_station
-      when 1
-        main.create_station
-        number_station = (main.stations).size - 1
-      when 2
-        number_station = main.choose_route
-      else
-        next
-      end
-      main.routes[number_route - 1].add_station(main.stations[number_station - 1])
-    when 3
-      if main.routes.empty?
-        puts 'First you need to create a Route'
-        main.create_route
-      end
-      number_route = main.choose_route
-      puts 'Enter number for delete Station from Route'
-      p main.routes[number_route - 1].show_list_of_stations
-      number_station = gets.chomp.to_i
-      (main.routes[number_route - 1]).delete_station(main.stations[number_station - 1])
-    else
-      next
-    end
-  when 4
-    if main.trains.empty?
-      puts 'You will create Train'
-      main.create_train
-    end
-    number_train = main.choose_train
-    if main.routes.empty?
+  def add_station_to_route
+    if routes.empty?
       puts 'First you need to create a Route'
-      main.create_route
+      create_route
     end
-    number_route = main.choose_route
-    main.assign_route(number_train - 1, number_route - 1)
-  when 5
-    if main.trains.empty?
+    route = choose_route
+    station = choose_station
+    route.add_station(station)
+  end
+
+  def delete_station_from_route
+    if routes.empty?
+      return puts 'You will not delete a station because there are no routes'
+    end
+    route = choose_route
+    station = choose_station_from_route(route)
+    route.delete_station(station)
+  end
+
+  def assign_route
+    if trains.empty?
       puts 'You will create Train'
-      main.create_train
+      create_train
     end
-    number_train = main.choose_train
-    puts 'Enter type for Carriage'
+    number_train = choose_train
+    puts "number_train: #{number_train}"
+    if routes.empty?
+      puts 'First you need to create a Route'
+      create_route
+    end
+    number_route = choose_route
+    number_train.set_route(number_route)
+  end
+
+  def add_cars
+    if trains.empty?
+      puts 'You will create Train'
+      create_train
+    end
+    number_train = choose_train
+    puts 'Enter type for Carriage (cargo or passenger)'
     carriage_type = gets.chomp.to_s
     if carriage_type == 'cargo'
       puts 'Enter value for capacity'
@@ -210,35 +145,95 @@ loop do
       seats = gets.chomp.to_i
       carriage = PassengerCarriage.new(seats)
     end
-    main.add_cars(main.trains[number_train - 1], carriage)
-  when 6
-    if main.trains.empty?
+    number_train.coupling_carriages(carriage)
+  end
+
+  def unhook_cars
+    if trains.empty?
+      return puts 'You cannot unhook a Carriage because you do not have Trains'
+    end
+    number_train = choose_train
+    if number_train.carriages.empty?
+      return puts 'You cannot unhook a Carriage, because the selected Train has no Carriages'
+    end
+    number_train.uncoupling_carriages
+  end
+
+  def move_train
+    if trains.empty?
       puts 'You will create Train'
-      main.create_train
+      create_train
     end
-    number_train = main.choose_train
-    if main.trains[number_train - 1].carriages.empty?
-      puts 'Your Train is empty'
-      next
+    train = choose_train
+    puts 'Which way do you want to move the Train (forward or back)?'
+    way = gets.chomp.to_s
+    if way == 'forward'
+      train.move_forward
     end
-    main.unhook_cars(main.trains[number_train - 1])
-  when 7
-    if main.trains.empty?
-      puts 'You will create Train'
-      main.create_train
+    if way == 'back'
+      train.move_back
     end
-    number_train = main.choose_train
-    if main.routes.empty?
-      puts 'First you need to create a Route'
-      main.create_route
+  end
+
+  def view_list
+    puts '============stations============'
+    stations.each.with_index(1) do |station, index|
+      puts "#{index} - #{station.name} - #{station.trains}"
     end
-    number_route = main.choose_route
-    main.assign_route(number_train - 1, number_route - 1)
-    main.move_train(main.trains[number_train - 1])
-  when 8
-    main.view_list
-  else
-    puts 'Good bye. Try again'
-    break
+  end
+
+  def choose_station
+    puts 'Enter the number for action on the Station'
+    puts '1 - Add new Station'
+    puts '2 - Add existing Station'
+    puts 'Anything - for back to previous menu'
+    number_station = gets.chomp.to_i
+    case number_station
+    when 1
+      create_station
+    when 2
+      if stations.empty?
+        puts 'You will create Station'
+        create_station
+      end
+      puts 'Enter number for existing Station'
+      stations.each.with_index(1) do |station, index|
+        puts "#{index} - #{station.name}"
+      end
+      number_station = gets.chomp.to_i - 1
+      stations[number_station]
+    else
+      puts 'Please, enter 1 or 2'
+    end
+  end
+
+  def choose_station_from_route(route)
+    route.show_list_of_stations
+    puts 'Enter number for Station'
+    number_station = gets.chomp.to_i - 1
+    route.delete_station(number_station)
+  end
+
+  def choose_train
+    puts 'Which Train do you want to choose?'
+    trains.each.with_index(1) do |train, index|
+      puts "#{index} - #{train.number}"
+    end
+    puts 'Enter number for Train'
+    number_train = gets.chomp.to_i - 1
+    trains[number_train]
+  end
+
+  def choose_route
+    puts 'Which route do you want to choose?'
+    routes.each.with_index(1) do |route, index|
+      puts "#{index} - #{route.name}"
+    end
+    puts 'Enter number for Route'
+    number_route = gets.chomp.to_i - 1
+    routes[number_route]
   end
 end
+
+main = Main.new
+main.run
