@@ -1,5 +1,5 @@
 class PassengerCarriage < Carriage
-  attr_reader :seats, :type
+  attr_reader :seats
 
   def initialize(seats)
     @type = 'passenger'
