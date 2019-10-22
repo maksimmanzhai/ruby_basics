@@ -1,3 +1,4 @@
+require './company.rb'
 require './carriage.rb'
 require './train.rb'
 require './cargo_carriage.rb'
@@ -64,22 +65,25 @@ class Main
     name = gets.chomp.to_s
     station = Station.new(name)
     stations << station
-    return station
+    station
   end
 
   def create_train
     puts 'Enter number for train'
     number = gets.chomp.to_i
+    puts 'Enter company for train'
+    company = gets.chomp.to_s
     puts 'Enter type (cargo or passenger) for train'
     type = gets.chomp.to_s
     if type == 'cargo'
-      train = CargoTrain.new(number)
+      train = CargoTrain.new(number, company)
     end
     if type == 'passenger'
-      train = PassengerTrain.new(number)
+      train = PassengerTrain.new(number, company)
     end
     @trains << train
-    return train
+    train.print_company
+    train
   end
 
   def create_route
@@ -91,6 +95,7 @@ class Main
     finish = choose_station
     route = Route.new(name, start, finish)
     @routes << route
+    route
   end
 
   def add_station_to_route
@@ -135,15 +140,17 @@ class Main
     number_train = choose_train
     puts 'Enter type for Carriage (cargo or passenger)'
     carriage_type = gets.chomp.to_s
+    puts 'Enter company for Carriage'
+    company = gets.chomp.to_s
     if carriage_type == 'cargo'
       puts 'Enter value for capacity'
       capacity = gets.chomp.to_i
-      carriage = CargoCarriage.new(capacity)
+      carriage = CargoCarriage.new(capacity, company)
     end
     if carriage_type == 'passenger'
       puts 'Enter value for seats'
       seats = gets.chomp.to_i
-      carriage = PassengerCarriage.new(seats)
+      carriage = PassengerCarriage.new(seats, company)
     end
     number_train.coupling_carriages(carriage)
   end

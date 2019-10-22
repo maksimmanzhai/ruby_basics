@@ -2,13 +2,18 @@
 
 # class train
 class Train
+  include Company
+
   attr_reader :number, :type, :speed, :carriages
 
-  def initialize(number)
+  def initialize(number, company)
     @number = number
     @speed = 0
     @carriages = []
+    @company = company
   end
+
+  
 
   def coupling_carriages(carriage)
     if carriage.type == self.type
