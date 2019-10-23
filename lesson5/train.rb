@@ -3,7 +3,8 @@
 # class train
 class Train
   include Company
-
+  include InstanceCounter
+  
   @@trains = []
 
   attr_reader :number, :type, :speed, :carriages
