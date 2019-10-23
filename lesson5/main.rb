@@ -30,6 +30,7 @@ class Main
       puts '8 - Unhook the Cars from the Train'
       puts '9 - Move the Train along the Route back and forth'
       puts '10 - View the list of Stations and the list of Trains at the Station'
+      puts '11 - Find Train by number of Train'
       puts 'Anything - for exit'
       choice = gets.chomp.to_i
       case choice
@@ -53,6 +54,8 @@ class Main
         move_train
       when 10
         view_list
+      when 11
+        find_train
       else
         puts 'Good bye. Try again'
         break
@@ -187,6 +190,12 @@ class Main
     stations.each.with_index(1) do |station, index|
       puts "#{index} - #{station.name} - #{station.trains}"
     end
+  end
+
+  def find_train
+    puts 'Enter the Train number to search'
+    number_train = gets.chomp.to_i
+    Train.find(number_train)
   end
 
   def choose_station

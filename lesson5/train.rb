@@ -4,6 +4,8 @@
 class Train
   include Company
 
+  @@trains = []
+
   attr_reader :number, :type, :speed, :carriages
 
   def initialize(number, company)
@@ -11,9 +13,8 @@ class Train
     @speed = 0
     @carriages = []
     @company = company
+    @@trains << self
   end
-
-  
 
   def coupling_carriages(carriage)
     if carriage.type == self.type
@@ -67,5 +68,17 @@ class Train
   # each train has its own stop-command
   def stop
     @speed = 0
+  end
+
+  class << self
+    def find(number)
+      @@trains.select do |train|
+        if train.number == number
+          puts train
+        else
+          nil
+        end
+      end
+    end
   end
 end
