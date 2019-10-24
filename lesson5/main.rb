@@ -73,17 +73,21 @@ class Main
   end
 
   def create_train
-    puts 'Enter number for train'
+    puts 'Enter number for Train'
     number = gets.chomp.to_i
-    puts 'Enter company for train'
+    puts 'Enter Company for Train'
     company = gets.chomp.to_s
-    puts 'Enter type (cargo or passenger) for train'
-    type = gets.chomp.to_s
-    if type == 'cargo'
+    puts 'Enter number of type for Train'
+    puts '1 - Cargo'
+    puts '2 - Passenger'
+    type = gets.chomp.to_i
+    case type
+    when 1
       train = CargoTrain.new(number, company)
-    end
-    if type == 'passenger'
+    when 2
       train = PassengerTrain.new(number, company)
+    else
+      return nil
     end
     @trains << train
     train.print_company
