@@ -1,4 +1,5 @@
 require './company.rb'
+require './instance_counter.rb'
 require './carriage.rb'
 require './train.rb'
 require './cargo_carriage.rb'

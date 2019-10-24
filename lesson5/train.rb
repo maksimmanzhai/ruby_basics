@@ -73,13 +73,7 @@ class Train
 
   class << self
     def find(number)
-      @@trains.select do |train|
-        if train.number == number
-          puts train
-        else
-          nil
-        end
-      end
+      @@trains.detect {|train| train.number == number }
     end
   end
 end

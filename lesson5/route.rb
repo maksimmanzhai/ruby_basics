@@ -4,6 +4,8 @@
 class Route
   attr_reader :name, :list_of_stations, :start, :finish
 
+  include InstanceCounter
+  
   def initialize(name, start, finish)
     @name = name
     @start = start
