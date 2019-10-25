@@ -1,7 +1,3 @@
-# Подключить этот модуль в классы поезда, маршрута и станции.
-# Примечание: инстансы подклассов могут считатья по 
-# отдельности, не увеличивая счетчик инстансев базового класса. 
-
 module InstanceCounter
   def self.included(base)
     base.extend         ClassMethods
@@ -10,14 +6,19 @@ module InstanceCounter
 
   module ClassMethods
     # возвращает кол-во экземпляров данного класса
+    attr_accessor :instances_count
+
     def instances
+      @instances_count
     end
   end
   
   module InstanceMethods
     # увеличивает счетчик кол-ва экземпляров класса и который можно вызвать из 
     # конструктора. При этом данный метод не должен быть публичным.
+    protected
     def register_instance
+      self.class.instances_count = (self.class.instances_count || 0) + 1
     end
   end
 end

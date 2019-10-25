@@ -20,6 +20,10 @@ class Main
 
   def run
     loop do
+      puts "Stations: #{Station.instances}"
+      puts "Cargo Trains: #{CargoTrain.instances}"
+      puts "Passenger Trains: #{PassengerTrain.instances}"
+      puts "Routes: #{Route.instances}"
       puts 'Enter number for your choice'
       puts '1 - Create Station'
       puts '2 - Create Train'

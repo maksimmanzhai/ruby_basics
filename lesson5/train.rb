@@ -3,7 +3,6 @@
 # class train
 class Train
   include Company
-  include InstanceCounter
 
   @@trains = []
 

@@ -2,11 +2,12 @@
 
 # class route
 class Route
-  attr_reader :name, :list_of_stations, :start, :finish
-
   include InstanceCounter
 
+  attr_reader :name, :list_of_stations, :start, :finish
+
   def initialize(name, start, finish)
+    self.register_instance
     @name = name
     @start = start
     @finish = finish
