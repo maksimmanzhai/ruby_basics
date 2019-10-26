@@ -6,10 +6,14 @@ module InstanceCounter
 
   module ClassMethods
     # возвращает кол-во экземпляров данного класса
-    attr_accessor :instances_count
+    attr_accessor :instances
 
     def instances
-      @instances_count
+      if @instances.nil?
+        nil
+      else
+        @instances
+      end
     end
   end
   
@@ -18,7 +22,7 @@ module InstanceCounter
     # конструктора. При этом данный метод не должен быть публичным.
     protected
     def register_instance
-      self.class.instances_count = (self.class.instances_count || 0) + 1
+      self.class.instances = (self.class.instances ||= 0) + 1
     end
   end
 end
