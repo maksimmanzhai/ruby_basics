@@ -10,7 +10,7 @@ module InstanceCounter
 
     def instances
       if @instances.nil?
-        nil
+        0
       else
         @instances
       end
