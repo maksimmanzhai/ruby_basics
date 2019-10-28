@@ -70,7 +70,7 @@ class Main
 
   def create_station
     puts 'Enter name for Station'
-    name = gets.chomp.to_s
+    name = gets.chomp
     station = Station.new(name)
     stations << station
     station

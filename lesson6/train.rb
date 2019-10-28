@@ -10,12 +10,27 @@ class Train
   attr_reader :number, :type, :speed, :carriages
 
   def initialize(number, company)
-    self.register_instance
     @number = number
-    @speed = 0
-    @carriages = []
     @company = company
-    @@trains << self
+    if valid?
+      @speed = 0
+      @carriages = []
+      @@trains << self
+    end
+  end
+
+  def valid?
+    validate!
+    true
+  rescue
+    false
+  end
+
+  def validate!
+    raise puts "ERROR: Number can't be empty" if @number.empty?
+    raise puts "ERROR: Number must be in the format XXX-XX" unless @number =~ /\S{3}(-| )\S{2}/i
+    raise puts "ERROR: Company can't be empty" if @company.empty?
+    raise puts "ERROR: Company should be at least 2 symbols" if @company.length < 2
   end
 
   def coupling_carriages(carriage)
