@@ -10,23 +10,17 @@ class Station
 
   def initialize(name)
     @name = name
-    if valid?
-      @trains = {}
-      @@stations << self
-      self.register_instance
-    end
-  end
-
-  def valid?
     validate!
-    true
-  rescue
-    false
+    @trains = {}
+    @@stations << self
+    self.register_instance
   end
 
   def validate!
-    raise puts "ERROR: Name can't be empty" if @name.empty?
-    raise puts "ERROR: Name should be at least 2 symbols" if @name.length < 2
+    raise "ERROR: Name of station can't be empty" if @name.empty?
+    raise "ERROR: Name of station should be at least 2 symbols" if @name.length < 2
+  rescue TypeError => e
+    e.message
   end
 
   def add_train(train)

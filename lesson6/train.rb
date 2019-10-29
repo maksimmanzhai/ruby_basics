@@ -12,25 +12,21 @@ class Train
   def initialize(number, company)
     @number = number
     @company = company
-    if valid?
-      @speed = 0
-      @carriages = []
-      @@trains << self
-    end
-  end
-
-  def valid?
     validate!
-    true
-  rescue
-    false
+    @speed = 0
+    @carriages = []
+    @@trains << self
   end
 
   def validate!
-    raise puts "ERROR: Number can't be empty" if @number.empty?
-    raise puts "ERROR: Number must be in the format XXX-XX" unless @number =~ /\S{3}(-| )\S{2}/i
-    raise puts "ERROR: Company can't be empty" if @company.empty?
-    raise puts "ERROR: Company should be at least 2 symbols" if @company.length < 2
+    raise "ERROR: Number of train can't be empty" if @number.empty?
+    raise "ERROR: Number of train must be in the format XXX-XX" unless @number =~ /(\S{3}-\S{2}|\S{3}\s\S{2})/i
+    raise "ERROR: Company can't be empty" if @company.empty?
+    raise "ERROR: Company should be at least 2 symbols" if @company.length < 2
+  rescue TypeError => e
+    e.message
+  rescue NoMethodError => e
+    e.message
   end
 
   def coupling_carriages(carriage)
