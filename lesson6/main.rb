@@ -74,11 +74,14 @@ class Main
     station = Station.new(name)
     stations << station
     station
+  rescue => e
+    puts e.message
+    retry
   end
 
   def create_train
-    puts 'Enter number for Train'
-    number = gets.chomp.to_i
+    puts 'Enter number for Train in format XXX-XX'
+    number = gets.chomp.to_s
     puts 'Enter Company for Train'
     company = gets.chomp.to_s
     puts 'Enter number of type for Train'
@@ -96,6 +99,9 @@ class Main
     @trains << train
     train.print_company
     train
+  rescue => e
+    puts e.message
+    retry
   end
 
   def create_route
@@ -108,6 +114,9 @@ class Main
     route = Route.new(name, start, finish)
     @routes << route
     route
+  rescue => e
+    puts e.message
+    retry
   end
 
   def add_station_to_route
