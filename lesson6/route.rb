@@ -14,8 +14,8 @@ class Route
     @finish = finish
     @list_of_stations = [start, finish]
     @@routes << self
-    self.register_instance
     validate!
+    self.register_instance
   end
 
   def validate!

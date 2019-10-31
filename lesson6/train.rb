@@ -14,8 +14,9 @@ class Train
     @company = company
     @speed = 0
     @carriages = []
-    @@trains << self
     validate!
+    @@trains << self
+    self.register_instance
   end
 
   def validate!
