@@ -4,13 +4,13 @@
 class Station
   include InstanceCounter
 
-  attr_reader :trains, :name
+  attr_reader :trains, :name, :stations
 
   @@stations = []
 
   def initialize(name)
     @name = name
-    @trains = {}
+    @trains = []
     @@stations << self
     validate!
     self.register_instance
@@ -22,7 +22,7 @@ class Station
   end
 
   def add_train(train)
-    @trains[train.number] = train
+    @trains << train
   end
 
   def trains_by_type(type)
@@ -34,14 +34,14 @@ class Station
   end
 
   def block_of_trains
-    @trains.each do |number, train, carriages|
-      yield(train.number, train.type, train.carriages)
+    @trains.each do |number, type, carriages|
+      yield(number, type, carriages)
     end
   end
 
   class << self
     def all
-      puts @@stations
+      @@stations
     end
   end
 end

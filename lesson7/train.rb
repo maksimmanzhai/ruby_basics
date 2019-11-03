@@ -90,5 +90,9 @@ class Train
     def find(number)
       @@trains.detect {|train| train.number == number }
     end
+    
+    def all
+      @@trains
+    end
   end
 end

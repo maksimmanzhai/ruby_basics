@@ -37,4 +37,10 @@ class Route
       puts "#{index} - #{station.name}"
     end
   end
+
+  class << self
+    def all
+      @@routes
+    end
+  end
 end

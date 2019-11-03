@@ -14,9 +14,9 @@ class Main
   attr_reader :stations, :trains, :routes
 
   def initialize
-    @stations = []
-    @trains = []
-    @routes = []
+    @stations = Station.all
+    @trains = Train.all
+    @routes = Route.all
   end
 
   def run
@@ -284,7 +284,7 @@ class Main
 
   def view_list_trains_on_station
     station = choose_station
-    station.block_of_trains{ |number, type, carriages| puts "#{number} - #{type} - #{carriages.size}" }
+    station.block_of_trains{ |number, type, carriages| puts "#{number} - #{type} - #{carriages}" }
   end
 
   def view_list_carriage_on_train
