@@ -80,12 +80,9 @@ class Train
     @speed = 0
   end
 
-  # написать метод, который принимает блок и проходит по всем вагонам поезда 
-  # (вагоны должны быть во внутреннем массиве), передавая каждый объект 
-  # вагона в блок.
   def block_of_carriages
     @carriages.each do |carriage|
-      yield(carriage)
+      yield(carriage.type, carriage.count_free_value, carriage.count_reserved_value)
     end
   end
 

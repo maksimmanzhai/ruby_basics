@@ -8,6 +8,7 @@ require './passenger_carriage.rb'
 require './passenger_train.rb'
 require './route.rb'
 require './station.rb'
+require './test.rb'
 
 class Main
   attr_reader :stations, :trains, :routes
@@ -283,12 +284,12 @@ class Main
 
   def view_list_trains_on_station
     station = choose_station
-    station.block_of_trains{ |number, type, carriages| puts "#{number}|\t#{type}|\t#{carriages.size}" }
+    station.block_of_trains{ |number, type, carriages| puts "#{number} - #{type} - #{carriages.size}" }
   end
 
   def view_list_carriage_on_train
     train = choose_train
-    train.block_of_carriages{ |carriage| puts carriage }
+    train.block_of_carriages{ |type, free_value, reserved_value| puts "#{type} - #{free_value} - #{reserved_value}" }
   end
 
   def choose_station_from_route(route)

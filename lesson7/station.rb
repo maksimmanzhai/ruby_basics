@@ -34,7 +34,7 @@ class Station
   end
 
   def block_of_trains
-    @trains.each do |number, train|
+    @trains.each do |number, train, carriages|
       yield(train.number, train.type, train.carriages)
     end
   end
