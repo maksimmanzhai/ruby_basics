@@ -1,9 +1,8 @@
 class CargoCarriage < Carriage
-  attr_reader :capacity
+  attr_reader :type
 
-  def initialize(capacity, company)
+  def initialize(value, company)
+    super
     @type = 'cargo'
-    @capacity = capacity
-    @company = company
   end
 end

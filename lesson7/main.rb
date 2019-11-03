@@ -36,6 +36,7 @@ class Main
       puts '9 - Move the Train along the Route back and forth'
       puts '10 - View the list of Stations and the list of Trains at the Station'
       puts '11 - Find Train by number of Train'
+      puts '12 - Reserve a seat or capacity in the Car'
       puts 'Anything - for exit'
       choice = gets.chomp.to_i
       case choice
@@ -61,6 +62,8 @@ class Main
         view_list
       when 11
         find_train
+      when 12
+        reserve
       else
         puts 'Good bye. Try again'
         break
@@ -243,6 +246,35 @@ class Main
     end
   end
 
+  def reserve
+    if trains.empty?
+      puts 'You will create Train'
+      create_train
+    end
+    train = choose_train
+    if train.carriages.empty?
+      puts 'You will hook Carriage'
+      add_cars
+    end
+    carriage = choose_carriage(train)
+    carriage.reserve_value
+  rescue => e
+    puts e.message
+    retry
+  end
+
+  def choose_carriage(train)
+    begin
+      puts 'Enter number of Carriage from Train'
+      number = gets.chomp.to_i
+      raise 'Carriage with this number does not exist' if !(train.carriages[number - 1])
+    rescue => e
+      puts e.message
+      retry
+    end
+    train.carriages[number - 1]
+  end
+
   def choose_station_from_route(route)
     route.show_list_of_stations
     puts 'Enter number for Station'
@@ -256,7 +288,9 @@ class Main
       puts "#{index} - #{train.number}"
     end
     puts 'Enter number for Train'
+    puts 'Enter 0 for return to main menu'
     number_train = gets.chomp.to_i - 1
+    run if number_train == -1
     trains[number_train]
   end
 

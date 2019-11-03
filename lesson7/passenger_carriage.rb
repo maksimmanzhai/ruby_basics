@@ -1,9 +1,8 @@
 class PassengerCarriage < Carriage
-  attr_reader :seats
+  attr_reader :type
 
-  def initialize(seats, company)
+  def initialize(value, company)
+    super
     @type = 'passenger'
-    @seats = seats
-    @company = company
   end
 end
