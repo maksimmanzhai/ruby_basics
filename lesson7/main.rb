@@ -226,7 +226,7 @@ class Main
 
   def choose_station
     puts 'Enter the number for action on the Station'
-    puts '1 - Add & choose new Station'
+    puts '1 - Add or choose new Station'
     puts '2 - Choose existing Station'
     puts 'Anything - for back to previous menu'
     number_station = gets.chomp.to_i
@@ -280,7 +280,7 @@ class Main
 
   def view_list_trains_on_station
     station = choose_station
-    station.block_of_trains{|number, train| puts "#{number} \t| \t#{train}"}
+    station.block_of_trains{ |number, type, carriages| puts "#{number}|\t#{type}|\t#{carriages.size}" }
   end
 
   def choose_station_from_route(route)
