@@ -33,6 +33,14 @@ class Station
     @trains.delete(train.number)
   end
 
+  # написать метод, который принимает блок и проходит по всем поездам на 
+  # станции, передавая каждый поезд в блок.
+  def block_of_trains
+    @trains.each do |number, train|
+      yield(train.number, train)
+    end
+  end
+
   class << self
     def all
       puts @@stations

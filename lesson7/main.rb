@@ -37,6 +37,7 @@ class Main
       puts '10 - View the list of Stations and the list of Trains at the Station'
       puts '11 - Find Train by number of Train'
       puts '12 - Reserve a seat or capacity in the Car'
+      puts '13 - View list of Trains on Station'
       puts 'Anything - for exit'
       choice = gets.chomp.to_i
       case choice
@@ -59,11 +60,13 @@ class Main
       when 9
         move_train
       when 10
-        view_list
+        view_list_station
       when 11
         find_train
       when 12
         reserve
+      when 13
+        view_list_trains_on_station
       else
         puts 'Good bye. Try again'
         break
@@ -208,7 +211,7 @@ class Main
     end
   end
 
-  def view_list
+  def view_list_station
     puts '============stations============'
     stations.each.with_index(1) do |station, index|
       puts "#{index} - #{station.name} - #{station.trains}"
@@ -223,8 +226,8 @@ class Main
 
   def choose_station
     puts 'Enter the number for action on the Station'
-    puts '1 - Add new Station'
-    puts '2 - Add existing Station'
+    puts '1 - Add & choose new Station'
+    puts '2 - Choose existing Station'
     puts 'Anything - for back to previous menu'
     number_station = gets.chomp.to_i
     case number_station
@@ -273,6 +276,11 @@ class Main
       retry
     end
     train.carriages[number - 1]
+  end
+
+  def view_list_trains_on_station
+    station = choose_station
+    station.block_of_trains{|number, train| puts "#{number} \t| \t#{train}"}
   end
 
   def choose_station_from_route(route)
