@@ -31,13 +31,14 @@ class Main
       puts '4 - Add Station to Route'
       puts '5 - Delete Station from Route'
       puts '6 - Assign a Train Route'
-      puts '7 - Add Cars to the Train'
-      puts '8 - Unhook the Cars from the Train'
+      puts '7 - Add Cariages to the Train'
+      puts '8 - Unhook the Cariages from the Train'
       puts '9 - Move the Train along the Route back and forth'
       puts '10 - View the list of Stations and the list of Trains at the Station'
       puts '11 - Find Train by number of Train'
-      puts '12 - Reserve a seat or capacity in the Car'
+      puts '12 - Reserve a seat or capacity in the Carriage'
       puts '13 - View list of Trains on Station'
+      puts '14 - View list of Carriage on Trains'
       puts 'Anything - for exit'
       choice = gets.chomp.to_i
       case choice
@@ -67,6 +68,8 @@ class Main
         reserve
       when 13
         view_list_trains_on_station
+      when 14
+        view_list_carriage_on_train
       else
         puts 'Good bye. Try again'
         break
@@ -281,6 +284,11 @@ class Main
   def view_list_trains_on_station
     station = choose_station
     station.block_of_trains{ |number, type, carriages| puts "#{number}|\t#{type}|\t#{carriages.size}" }
+  end
+
+  def view_list_carriage_on_train
+    train = choose_train
+    train.block_of_carriages{ |carriage| puts carriage }
   end
 
   def choose_station_from_route(route)
