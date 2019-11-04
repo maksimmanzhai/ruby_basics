@@ -30,3 +30,9 @@ train2.set_route(route2)
 train3.set_route(route3)
 train4.set_route(route4)
 train5.set_route(route5)
+
+carriage1 = CargoCarriage.new(123, 'lexx')
+carriage2 = PassengerCarriage.new(40, 'lexx')
+
+train1.coupling_carriages(carriage1)
+train1.coupling_carriages(carriage2)

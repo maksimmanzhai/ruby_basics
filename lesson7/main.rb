@@ -264,7 +264,16 @@ class Main
       add_cars
     end
     carriage = choose_carriage(train)
-    carriage.reserve_value
+
+    if carriage.type == 'cargo'
+      puts 'Enter the amount of space required'
+      value = gets.chomp.to_i
+      carriage.reserve_capacity(value)
+    end
+
+    if carriage.type == 'passenger'
+      carriage.reserve_seats
+    end
   rescue => e
     puts e.message
     retry
