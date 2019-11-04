@@ -1,5 +1,5 @@
 class PassengerCarriage < Carriage
-  attr_reader :type, :seats
+  attr_reader :type, :seats, :free_seats, :reserved_seats
 
   def initialize(seats, company)
     super

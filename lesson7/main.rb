@@ -192,11 +192,11 @@ class Main
     if trains.empty?
       return puts 'You cannot unhook a Carriage because you do not have Trains'
     end
-    number_train = choose_train
-    if number_train.carriages.empty?
+    train = choose_train
+    if train.carriages.empty?
       return puts 'You cannot unhook a Carriage, because the selected Train has no Carriages'
     end
-    number_train.uncoupling_carriages
+    train.uncoupling_carriages
   end
 
   def move_train
@@ -264,13 +264,11 @@ class Main
       add_cars
     end
     carriage = choose_carriage(train)
-
     if carriage.type == 'cargo'
       puts 'Enter the amount of space required'
       value = gets.chomp.to_i
       carriage.reserve_capacity(value)
     end
-
     if carriage.type == 'passenger'
       carriage.reserve_seats
     end
@@ -293,12 +291,17 @@ class Main
 
   def view_list_trains_on_station
     station = choose_station
-    station.block_of_trains{ |number, type, carriages| puts "#{number} - #{type} - #{carriages}" }
+    station.each_train{ |train| puts "#{train.number} - #{train.type} - #{train.carriages.count}" }
   end
 
   def view_list_carriage_on_train
     train = choose_train
-    train.block_of_carriages{ |type, free_value, reserved_value| puts "#{type} - #{free_value} - #{reserved_value}" }
+    if train.type == 'cargo'
+      train.each_carriage{ |carriage| puts "#{carriage.type} - #{carriage.free_capacity} - #{carriage.reserved_capacity}" }
+    end
+    if train.type == 'passenger'
+      train.each_carriage{ |carriage| puts "#{carriage.type} - #{carriage.free_seats} - #{carriage.reserved_seats}" }
+    end
   end
 
   def choose_station_from_route(route)

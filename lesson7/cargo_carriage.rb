@@ -1,5 +1,5 @@
 class CargoCarriage < Carriage
-  attr_reader :type, :capacity
+  attr_reader :type, :capacity, :free_capacity, :reserved_capacity
 
   def initialize(capacity, company)
     super

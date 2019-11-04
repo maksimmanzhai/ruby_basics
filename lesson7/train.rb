@@ -80,9 +80,9 @@ class Train
     @speed = 0
   end
 
-  def block_of_carriages
+  def each_carriage
     @carriages.each do |carriage|
-      yield(carriage.type, carriage.count_free_value, carriage.count_reserved_value)
+      yield(carriage)
     end
   end
 
