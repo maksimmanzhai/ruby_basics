@@ -1,26 +1,18 @@
 class PassengerCarriage < Carriage
-  attr_reader :type, :seats, :free_seats, :reserved_seats
+  attr_reader :type, :seats
 
   def initialize(seats, company)
     super
     @type = 'passenger'
     @seats = seats
-    @free_seats = seats
-    @reserved_seats = 0
+    @free = seats
+    @reserved = 0
     @company = company
   end
 
   def reserve_seats
-    raise 'There is no free seats in the selected car' if @free_seats <= 0
-    @reserved_seats += 1
-    @free_seats -= 1
-  end
-  
-  def count_reserved_seats
-    @reserved_seats
-  end
-
-  def count_free_seats
-    @free_seats
+    raise 'There is no free seats in the selected car' if @free <= 0
+    @reserved += 1
+    @free -= 1
   end
 end

@@ -291,17 +291,14 @@ class Main
 
   def view_list_trains_on_station
     station = choose_station
-    station.each_train{ |train| puts "#{train.number} - #{train.type} - #{train.carriages.count}" }
+    puts "\tNumber\tType\tCarriages count"
+    station.each_train{ |train| puts "\t#{train.number}\t#{train.type}\t#{train.carriages.count}" }
   end
 
   def view_list_carriage_on_train
     train = choose_train
-    if train.type == 'cargo'
-      train.each_carriage{ |carriage| puts "#{carriage.type} - #{carriage.free_capacity} - #{carriage.reserved_capacity}" }
-    end
-    if train.type == 'passenger'
-      train.each_carriage{ |carriage| puts "#{carriage.type} - #{carriage.free_seats} - #{carriage.reserved_seats}" }
-    end
+    puts "\tType\tFree\tReserved"
+    train.each_carriage{ |carriage| puts "\t#{carriage.type}\t#{carriage.free}\t#{carriage.reserved}" }
   end
 
   def choose_station_from_route(route)

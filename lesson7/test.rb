@@ -36,9 +36,13 @@ carriage2 = PassengerCarriage.new(40, 'Ritine')
 carriage3 = CargoCarriage.new(200, 'Asebx')
 carriage4 = CargoCarriage.new(213, 'Asebx')
 carriage5 = CargoCarriage.new(190, 'Asebx')
+carriage6 = CargoCarriage.new(200, 'Lexx')
+carriage7 = CargoCarriage.new(110, 'Lexx')
 
 train1.coupling_carriages(carriage1)
 train1.coupling_carriages(carriage2)
+train1.coupling_carriages(carriage6)
+train1.coupling_carriages(carriage7)
 
 train2.coupling_carriages(carriage3)
 train2.coupling_carriages(carriage4)

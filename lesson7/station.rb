@@ -35,7 +35,7 @@ class Station
 
   def each_train
     @trains.each do |train|
-      yield(train)
+      yield(train) if block_given?
     end
   end
 

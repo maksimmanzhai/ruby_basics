@@ -82,7 +82,7 @@ class Train
 
   def each_carriage
     @carriages.each do |carriage|
-      yield(carriage)
+      yield(carriage) if block_given?
     end
   end
 
