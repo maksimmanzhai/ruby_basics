@@ -3,7 +3,7 @@ module InstanceCounter
     base.extend         ClassMethods
     base.send :include, InstanceMethods
   end
-  
+
   module ClassMethods
     # возвращает кол-во экземпляров данного класса
     attr_accessor :instances
@@ -14,7 +14,7 @@ module InstanceCounter
   end
 
   module InstanceMethods
-    # увеличивает счетчик кол-ва экземпляров класса и который можно вызвать из 
+    # увеличивает счетчик кол-ва экземпляров класса и который можно вызвать из
     # конструктора. При этом данный метод не должен быть публичным.
     protected
     def register_instance
