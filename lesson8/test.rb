@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 station1 = Station.new('minsk')
 station2 = Station.new('hrodna')
 station3 = Station.new('vitebsk')
@@ -10,6 +12,7 @@ train2 = CargoTrain.new('452 14', 'Accessories')
 train3 = CargoTrain.new('223 82', 'Iconic')
 train4 = PassengerTrain.new('876 26', 'Pronto')
 train5 = PassengerTrain.new('342 54', 'Simplified')
+train6 = PassengerTrain.new('591 54', 'Asbert')
 
 route1 = Route.new('minsk_mohilev', station1, station4)
 route2 = Route.new('hrodna_brest', station2, station6)
@@ -25,11 +28,12 @@ route3.add_station(station1)
 
 route1.delete_station(station4)
 
-train1.set_route(route1)
-train2.set_route(route2)
-train3.set_route(route3)
-train4.set_route(route4)
-train5.set_route(route5)
+train1.route(route1)
+train2.route(route2)
+train3.route(route3)
+train4.route(route4)
+train5.route(route5)
+train6.route(route6)
 
 carriage1 = CargoCarriage.new(123, 'Lexx')
 carriage2 = PassengerCarriage.new(40, 'Ritine')

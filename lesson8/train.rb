@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# class train
+# class for creating Trains
 class Train
   include Company
   include InstanceCounter
@@ -16,27 +16,27 @@ class Train
     @carriages = []
     validate!
     @@trains << self
-    self.register_instance
+    register_instance
   end
 
   def validate!
     raise "ERROR: Number of train can't be empty" if @number.empty?
-    raise "ERROR: Number of train must be in the format XXX-XX" unless @number =~ /(\S{3}-\S{2}|\S{3}\s\S{2})/i
+    unless @number =~ /(\S{3}-\S{2}|\S{3}\s\S{2})/i
+      raise 'ERROR: Number of train must be in the format XXX-XX'
+    end
     raise "ERROR: Company can't be empty" if @company.empty?
-    raise "ERROR: Company should be at least 2 symbols" if @company.length < 2
+    raise 'ERROR: Company should be at least 2 symbols' if @company.length < 2
   end
 
   def coupling_carriages(carriage)
-    if carriage.type == self.type
-      @carriages << carriage
-    end
+    @carriages << carriage if carriage.type == type
   end
 
   def uncoupling_carriages
     @carriages.pop
   end
 
-  def set_route(route)
+  def route(route)
     @route = route
     @current_station_index = 0
     @route.start.add_train(self)
@@ -57,12 +57,13 @@ class Train
   end
 
   def previous_station
-    return unless @current_station_index > 0
+    return unless @current_station_index.positive?
+
     @route.list_of_stations[@current_station_index - 1]
   end
 
   def current_station
-    return @route.list_of_stations[@current_station_index]
+    @route.list_of_stations[@current_station_index]
   end
 
   def next_station
@@ -88,9 +89,9 @@ class Train
 
   class << self
     def find(number)
-      @@trains.detect {|train| train.number == number }
+      @@trains.detect { |train| train.number == number }
     end
-    
+
     def all
       @@trains
     end

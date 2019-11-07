@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# class for creating Passenger Carriages
 class PassengerCarriage < Carriage
   attr_reader :type, :seats
 
