@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# class for creating passenger carriages
 class PassengerCarriage < Carriage
   attr_reader :type, :seats
 
@@ -12,6 +15,7 @@ class PassengerCarriage < Carriage
 
   def reserve_seats
     raise 'There is no free seats in the selected car' if @free <= 0
+
     @reserved += 1
     @free -= 1
   end

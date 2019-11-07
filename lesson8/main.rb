@@ -1,15 +1,18 @@
-require './company.rb'
-require './instance_counter.rb'
-require './carriage.rb'
-require './train.rb'
-require './cargo_carriage.rb'
-require './cargo_train.rb'
-require './passenger_carriage.rb'
-require './passenger_train.rb'
-require './route.rb'
-require './station.rb'
-require './test.rb'
+# frozen_string_literal: true
 
+require_relative 'company.rb'
+require_relative 'instance_counter.rb'
+require_relative 'carriage.rb'
+require_relative 'train.rb'
+require_relative 'cargo_carriage.rb'
+require_relative 'cargo_train.rb'
+require_relative 'passenger_carriage.rb'
+require_relative 'passenger_train.rb'
+require_relative 'route.rb'
+require_relative 'station.rb'
+require_relative 'test.rb'
+
+# class for creating main menu
 class Main
   attr_reader :stations, :trains, :routes
 
@@ -35,7 +38,7 @@ class Main
       puts '7 - Add Cariages to the Train'
       puts '8 - Unhook the Cariages from the Train'
       puts '9 - Move the Train along the Route back and forth'
-      puts '10 - View the list of Stations and the list of Trains at the Station'
+      puts '10 - View list of Stations and the list of Trains at the Station'
       puts '11 - Find Train by number of Train'
       puts '12 - Reserve a seat or capacity in the Carriage'
       puts '13 - View list of Trains on Station'
@@ -43,34 +46,20 @@ class Main
       puts 'Anything - for exit'
       choice = gets.chomp.to_i
       case choice
-      when 1
-        create_station
-      when 2
-        create_train
-      when 3
-        create_route
-      when 4
-        add_station_to_route
-      when 5
-        delete_station_from_route
-      when 6
-        assign_route
-      when 7
-        add_cars
-      when 8
-        unhook_cars
-      when 9
-        move_train
-      when 10
-        view_list_station
-      when 11
-        find_train
-      when 12
-        reserve
-      when 13
-        view_list_trains_on_station
-      when 14
-        view_list_carriage_on_train
+      when 1 then create_station
+      when 2 then create_train
+      when 3 then create_route
+      when 4 then add_station_to_route
+      when 5 then delete_station_from_route
+      when 6 then assign_route
+      when 7 then add_cars
+      when 8 then unhook_cars
+      when 9 then move_train
+      when 10 then view_list_station
+      when 11 then find_train
+      when 12 then reserve
+      when 13 then view_list_trains_on_station
+      when 14 then view_list_carriage_on_train
       else
         puts 'Good bye. Try again'
         break
@@ -84,7 +73,7 @@ class Main
     station = Station.new(name)
     stations << station
     station
-  rescue => e
+  rescue StandardError => e
     puts e.message
     retry
   end
@@ -94,22 +83,15 @@ class Main
     number = gets.chomp.to_s
     puts 'Enter Company for Train'
     company = gets.chomp.to_s
-    puts 'Enter number of type for Train'
-    puts '1 - Cargo'
-    puts '2 - Passenger'
-    type = gets.chomp.to_i
-    case type
-    when 1
-      train = CargoTrain.new(number, company)
-    when 2
-      train = PassengerTrain.new(number, company)
-    else
-      return nil
+    puts 'Enter number of type for Train (1 - Cargo, 2 - Passenger)'
+    case gets.chomp.to_i
+    when 1 then train = CargoTrain.new(number, company)
+    when 2 then train = PassengerTrain.new(number, company)
+    else return nil
     end
     @trains << train
-    train.print_company
     train
-  rescue => e
+  rescue StandardError => e
     puts e.message
     retry
   end
@@ -124,7 +106,7 @@ class Main
     route = Route.new(name, start, finish)
     @routes << route
     route
-  rescue => e
+  rescue StandardError => e
     puts e.message
     retry
   end
@@ -149,10 +131,10 @@ class Main
   end
 
   def assign_route
-    if trains.empty?
-      puts 'You will create Train'
-      create_train
-    end
+    raise create_train if trains.empty?
+       
+    
+    
     number_train = choose_train
     puts "number_train: #{number_train}"
     if routes.empty?
@@ -160,7 +142,10 @@ class Main
       create_route
     end
     number_route = choose_route
-    number_train.set_route(number_route)
+    number_train.route(number_route)
+  rescue StandardError => e
+    puts e.message
+    retry 
   end
 
   def add_cars
@@ -194,7 +179,7 @@ class Main
     end
     train = choose_train
     if train.carriages.empty?
-      return puts 'You cannot unhook a Carriage, because the selected Train has no Carriages'
+      return puts 'Your train must have wagons'
     end
     train.uncoupling_carriages
   end
@@ -207,12 +192,8 @@ class Main
     train = choose_train
     puts 'Which way do you want to move the Train (forward or back)?'
     way = gets.chomp.to_s
-    if way == 'forward'
-      train.move_forward
-    end
-    if way == 'back'
-      train.move_back
-    end
+    train.move_forward if way == 'forward'
+    train.move_back if way == 'back'
   end
 
   def view_list_station
@@ -269,10 +250,8 @@ class Main
       value = gets.chomp.to_i
       carriage.reserve_capacity(value)
     end
-    if carriage.type == 'passenger'
-      carriage.reserve_seats
-    end
-  rescue => e
+    carriage.reserve_seats if carriage.type == 'passenger'
+  rescue StandardError => e
     puts e.message
     retry
   end
@@ -281,8 +260,10 @@ class Main
     begin
       puts 'Enter number of Carriage from Train'
       number = gets.chomp.to_i
-      raise 'Carriage with this number does not exist' if !(train.carriages[number - 1])
-    rescue => e
+      if !train.carriages[number - 1]
+        raise 'Carriage with this number does not exist'
+      end
+    rescue StandardError => e
       puts e.message
       retry
     end
@@ -292,13 +273,13 @@ class Main
   def view_list_trains_on_station
     station = choose_station
     puts "\tNumber\tType\tCarriages count"
-    station.each_train{ |train| puts "\t#{train.number}\t#{train.type}\t#{train.carriages.count}" }
+    station.each_train { |train| puts "\t#{train.number}\t#{train.type}\t#{train.carriages.count}" }
   end
 
   def view_list_carriage_on_train
     train = choose_train
     puts "\tType\tFree\tReserved"
-    train.each_carriage{ |carriage| puts "\t#{carriage.type}\t#{carriage.free}\t#{carriage.reserved}" }
+    train.each_carriage { |carriage| puts "\t#{carriage.type}\t#{carriage.free}\t#{carriage.reserved}" }
   end
 
   def choose_station_from_route(route)

@@ -1,11 +1,15 @@
+# frozen_string_literal: true
+
+# module for counting instances of classes
 module InstanceCounter
   def self.included(base)
     base.extend         ClassMethods
     base.send :include, InstanceMethods
   end
 
+  # submodule for counting instances of classes
   module ClassMethods
-    # возвращает кол-во экземпляров данного класса
+    # returns the number of instances of this class
     attr_accessor :instances
 
     def instances
@@ -13,10 +17,13 @@ module InstanceCounter
     end
   end
 
+  # submodule for counting instances of classes
   module InstanceMethods
-    # увеличивает счетчик кол-ва экземпляров класса и который можно вызвать из
-    # конструктора. При этом данный метод не должен быть публичным.
+    # increases the counter of the number of class instances and which can be
+    # called from the constructor. However, this method should not be public.
+
     protected
+
     def register_instance
       self.class.instances = (self.class.instances ||= 0) + 1
     end

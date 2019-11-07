@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# class for creating carriages
 class Carriage
   include Company
 

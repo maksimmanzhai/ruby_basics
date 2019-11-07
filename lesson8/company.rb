@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# module for creating companies
 module Company
   attr_accessor :company
 

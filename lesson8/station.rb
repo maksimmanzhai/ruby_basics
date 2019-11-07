@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# class station
+# class for creating stations
 class Station
   include InstanceCounter
 
@@ -17,8 +17,8 @@ class Station
   end
 
   def validate!
-    raise "ERROR: Name of station can't be empty" if @name.empty?
-    raise "ERROR: Name of station should be at least 2 symbols" if @name.length < 2
+    raise 'Name of station can\'t be empty' if @name.empty?
+    raise 'Name of station should be at least 2 symbols' if @name.length < 2
   end
 
   def add_train(train)
