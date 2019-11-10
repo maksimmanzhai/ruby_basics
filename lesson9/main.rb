@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require './accessors.rb'
+require './validation.rb'
 require './company.rb'
 require './instance_counter.rb'
 require './carriage.rb'

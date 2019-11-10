@@ -4,10 +4,16 @@
 class Train
   include Company
   include InstanceCounter
+  include Validation
 
   @@trains = []
 
   attr_reader :number, :type, :speed, :carriages
+
+  NUMBER_FORMAT = /(\S{3}-\S{2}|\S{3}\s\S{2})/i
+
+  validate :number, :presence
+  validate :number, :format, NUMBER_FORMAT
 
   def initialize(number, company)
     @number = number
@@ -17,15 +23,6 @@ class Train
     validate!
     @@trains << self
     register_instance
-  end
-
-  def validate!
-    raise "ERROR: Number of train can't be empty" if @number.empty?
-    unless @number =~ /(\S{3}-\S{2}|\S{3}\s\S{2})/i
-      raise 'ERROR: Number of train must be in the format XXX-XX'
-    end
-    raise "ERROR: Company can't be empty" if @company.empty?
-    raise 'ERROR: Company should be at least 2 symbols' if @company.length < 2
   end
 
   def coupling_carriages(carriage)

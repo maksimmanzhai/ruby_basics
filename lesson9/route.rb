@@ -3,8 +3,13 @@
 # class for creating Routes
 class Route
   include InstanceCounter
+  include Validation
+
+  validate :start, :presence
+  validate :finish, :presence
 
   attr_reader :name, :list_of_stations, :start, :finish
+
   @@routes = []
 
   def initialize(name, start, finish)
@@ -15,11 +20,6 @@ class Route
     @@routes << self
     validate!
     register_instance
-  end
-
-  def validate!
-    raise "Name of route can't be empty" if @name.empty?
-    raise 'Name of route should be at least 2 symbols' if @name.length < 2
   end
 
   def add_station(station)

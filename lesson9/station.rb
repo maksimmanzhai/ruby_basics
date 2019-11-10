@@ -3,8 +3,11 @@
 # class for creating Stations
 class Station
   include InstanceCounter
+  include Validation
 
   attr_reader :trains, :name, :stations
+
+  validate :name, :presence
 
   @@stations = []
 
@@ -14,11 +17,6 @@ class Station
     @@stations << self
     validate!
     register_instance
-  end
-
-  def validate!
-    raise 'Name of station can\'t be empty' if @name.empty?
-    raise 'Name of station should be at least 2 symbols' if @name.length < 2
   end
 
   def add_train(train)
