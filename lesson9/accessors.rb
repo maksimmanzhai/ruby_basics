@@ -18,8 +18,8 @@ module Acсessors
         define_method(name) do
           instance_variable_get(var_name)
         end
-        define_method("#{name}=".to_sym) do |value|
-          instance_variable_set(var_name, value)
+        define_method("#{name}_history".to_sym) do
+          history_get(name.to_sym)
         end
         define_method("#{name}=".to_sym) do |value|
           history_save(name.to_sym, value)

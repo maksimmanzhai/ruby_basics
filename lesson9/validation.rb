@@ -10,8 +10,12 @@ module Validation
     attr_accessor :checks
 
     def save_check(name, config)
-      @checks ||= {}
-      @checks[name] ||= []
+      @checks ||= []
+      @checks[name] ||= {
+        name: name,
+        validation_type: validation_type,
+        params: params
+      }
       @checks[name] << config
     end
 
@@ -40,7 +44,7 @@ module Validation
       end
     end
 
-    def validate_presence(value, _rule)
+    def validate_presence(value, _)
       raise 'Value can\'t be nil or empty' if value.nil? || value.empty?
     end
 
