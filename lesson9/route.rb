@@ -5,8 +5,7 @@ class Route
   include InstanceCounter
   include Validation
 
-  validate :start, :presence
-  validate :finish, :presence
+  validate :name, :presence
 
   attr_reader :name, :list_of_stations, :start, :finish
 
@@ -14,11 +13,11 @@ class Route
 
   def initialize(name, start, finish)
     @name = name
+    validate!
     @start = start
     @finish = finish
     @list_of_stations = [start, finish]
     @@routes << self
-    validate!
     register_instance
   end
 

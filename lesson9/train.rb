@@ -17,10 +17,10 @@ class Train
 
   def initialize(number, company)
     @number = number
+    validate!
     @company = company
     @speed = 0
     @carriages = []
-    validate!
     @@trains << self
     register_instance
   end
